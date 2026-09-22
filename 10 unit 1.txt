@@ -1,0 +1,32 @@
+CREATE TABLE STUDENT (
+    STUDENT_ID NUMBER PRIMARY KEY,
+    NAME       VARCHAR2(50),
+    MARK1      NUMBER,
+    MARK2      NUMBER,
+    MARK3      NUMBER
+);
+DECLARE
+    sid NUMBER := &student_id;
+    m1 NUMBER;
+    m2 NUMBER;
+    m3 NUMBER;
+    total NUMBER;
+    percentage NUMBER;
+BEGIN
+    SELECT MARK1, MARK2, MARK3
+    INTO m1, m2, m3
+    FROM STUDENT
+    WHERE STUDENT_ID = sid;
+
+    total := m1 + m2 + m3;
+    percentage := total / 3;
+
+    DBMS_OUTPUT.PUT_LINE('Student ID = ' || sid);
+    DBMS_OUTPUT.PUT_LINE('Total Marks = ' || total);
+    DBMS_OUTPUT.PUT_LINE('Percentage = ' || percentage || '%');
+
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('Student not found');
+END;
+/
